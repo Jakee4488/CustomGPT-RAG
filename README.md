@@ -14,6 +14,7 @@ Chat Bot using LLM models and custom fine-tuning with RAG.
 - [Ingesting Documents](#ingesting-documents)
 - [Running Locally](#running-locally)
 - [API Integration](#api-integration)
+- [Azure Deployment](#azure-deployment)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -88,6 +89,56 @@ The project provides several API endpoints to manage documents and handle user p
 - `/api/save_document`: Saves uploaded documents to the server.
 - `/api/run_ingest`: Runs the document ingestion process.
 - `/api/prompt_route`: Handles user prompts and returns responses.
+- `/health`: Health check endpoint for container orchestration.
+
+## Azure Deployment
+
+This project includes a complete, production-ready deployment solution for Azure using Docker, Terraform, and GitHub Actions.
+
+### Quick Start
+
+```bash
+# 1. Initial setup
+./scripts/setup-azure.sh
+
+# 2. Configure GitHub secrets (see output from step 1)
+
+# 3. Deploy to Azure
+./scripts/deploy.sh --env dev
+```
+
+### Deployment Features
+
+- **Docker Containerization**: Production-optimized multi-stage builds
+- **Azure Infrastructure**: Container Registry, App Service, Storage, Key Vault
+- **CI/CD Pipeline**: Automated testing, building, and deployment via GitHub Actions
+- **Environment Management**: Separate dev and production configurations
+- **Monitoring**: Application Insights integration
+- **Security**: Key Vault for secrets, managed identities, RBAC
+
+### Documentation
+
+- **[QUICKSTART.md](QUICKSTART.md)** - Get started in 5 minutes
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Comprehensive deployment guide
+- **[PACKAGE.md](PACKAGE.md)** - Package overview and features
+- **[.github/SECRETS.md](.github/SECRETS.md)** - GitHub secrets configuration
+
+### Cost Estimate
+
+- **Development**: ~$70/month
+- **Production**: ~$185/month
+
+### Architecture
+
+```
+GitHub Actions → Docker Build → Azure Container Registry
+                                        ↓
+                             Azure App Service (Linux)
+                                        ↓
+                   Azure Storage (Documents, DB, Models)
+```
+
+For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
 
 ## Contributing
 Contributions are welcome! Please fork the repository and submit a pull request with your changes. Ensure your code adheres to the project's coding standards and includes appropriate tests.

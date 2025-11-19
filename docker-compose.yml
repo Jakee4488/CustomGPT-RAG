@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  customgpt-rag:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: customgpt-rag
+    ports:
+      - "5110:5110"  # API port
+      - "5111:5111"  # UI port
+    environment:
+      - DEVICE_TYPE=${DEVICE_TYPE:-cpu}
+      - MODEL_ID=${MODEL_ID:-NousResearch/Llama-2-7b-chat-hf}
+      - MODEL_BASENAME=${MODEL_BASENAME:-}
+      - EMBEDDING_MODEL_NAME=${EMBEDDING_MODEL_NAME:-hkunlp/instructor-large}
+      - PERSIST_DIRECTORY=/app/DB
+      - SOURCE_DIRECTORY=/app/SOURCE_DOCUMENTS
+    volumes:
+      - ./SOURCE_DOCUMENTS:/app/SOURCE_DOCUMENTS
+      - ./DB:/app/DB
+      - ./models:/app/models
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5110/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - customgpt-network
+
+networks:
+  customgpt-network:
+    driver: bridge

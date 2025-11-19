@@ -73,6 +73,12 @@ QA = RetrievalQA.from_chain_type(
 app = Flask(__name__)
 
 
+@app.route("/health", methods=["GET"])
+def health_check():
+    """Health check endpoint for container orchestration"""
+    return jsonify({"status": "healthy", "device": DEVICE_TYPE}), 200
+
+
 @app.route("/api/delete_source", methods=["GET"])
 def delete_source_route():
     folder_name = "SOURCE_DOCUMENTS"

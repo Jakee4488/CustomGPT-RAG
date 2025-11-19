@@ -1,0 +1,3 @@
+# Keep this directory but not its contents
+*
+!.gitkeep

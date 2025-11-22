@@ -67,6 +67,7 @@ To ingest documents into the system, use the UI to upload the files. Supported f
 #### run_localGPT.py
 - Sets up the local QA system with specified device type and options.
 - Runs an interactive loop for user queries and returns answers based on ingested documents.
+  
 
 #### run_localGPT_API.py
 - Defines API endpoints to delete and save documents, run ingestion, and handle user prompts.
